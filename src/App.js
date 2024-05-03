@@ -79,6 +79,7 @@ const clickHandler =(page, index)=>{
 //SIDE EFFECTS/////
 useEffect(()=>{
     stackEvents();
+    //change the array size for required pages
     const numbers = new Array(50).fill(0).map((_, i) => i + 1);
     setPlaceholder(numbers)
 },[]);
