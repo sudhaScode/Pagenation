@@ -14,13 +14,13 @@ const [activeIndex, setActiveIndex] = useState(0);// active index as per the lis
 /***IMAGES states */
 const [images, setImages] = useState([]);
 const [gallary, setGallary] = useState([]);
-const [firedImages, setFiredImages] = useState(50);
+const [firedImages, setFiredImages] = useState(0);
 // 1000 pages per page 50 images
 
 const stackEvents =async()=>{
-    const images = await fetchStack();
-    //console.log(images)
-    setImages(images)
+    const data = await fetchStack();
+    //console.log(data);
+    setImages(data);
     
 }
 
@@ -78,14 +78,15 @@ const clickHandler =(page, index)=>{
 
 //SIDE EFFECTS/////
 useEffect(()=>{
-    stackEvents();
-    //change the array size for required pages
+    //change the array size for required
+    stackEvents(); //fetch 
     const numbers = new Array(50).fill(0).map((_, i) => i + 1);
-    setPlaceholder(numbers)
+    setPlaceholder(numbers);
 },[]);
 
 useEffect(()=>{ //setting up dummy list 
     let currentPagesList =[];
+    console.log(placeholder.length);
    for (let i=0;i<10;i++){
       currentPagesList.push({
         page: placeholder[i],
@@ -93,22 +94,20 @@ useEffect(()=>{ //setting up dummy list
    }
     setList(currentPagesList);
     setSize(placeholder.length-1);
+
 },[placeholder]);
 
 useEffect(()=>{//setting page wise images 
     let currentImages =[];
-    let loop=0;
-    let firingIndex =firedImages;
-   
-    while(loop !== placeholder.length-2){
+    let firingIndex =firedImages;   
+    for(let i=0;i<placeholder.length;i++){
         currentImages.push(images[firingIndex]);
-        loop++;
         firingIndex++;
-    }
-    console.log("DEBUG", firedImages)
+       // console.log("loop")
+   }
     setGallary(currentImages);
-    setFiredImages((prevSate)=>activePage*placeholder.length);
-},[activePage, images]);
+    setFiredImages(activePage*placeholder.length);
+},[activePage,images]);
 
 useEffect(()=>{
    

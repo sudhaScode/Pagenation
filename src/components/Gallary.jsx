@@ -2,6 +2,7 @@ import React, { Fragment } from "react";
 import styles from "../App.module.css"
 
 function Gallary( {list, activePage}){
+    //console.log(list)
 
     return (
         <Fragment>
